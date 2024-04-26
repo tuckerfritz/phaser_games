@@ -1,18 +1,20 @@
-import { useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 
-import Phaser from "phaser";
-import { PhaserGame } from "./game/PhaserGame";
+import Phaser, { Game } from "phaser";
+import { MainMenu, PlayableScene } from "./game/scenes";
+import StartGame from "./game/main";
+import { EventBus } from "./game/EventBus";
 
 function App() {
   // The sprite can only be moved in the MainMenu Scene
   const [canMoveSprite, setCanMoveSprite] = useState(true);
 
-  //  References to the PhaserGame component (game and scene are exposed)
-  const phaserRef = useRef();
+  const gameRef = useRef<Game>();
+  const sceneRef = useRef<PlayableScene>();
   const [spritePosition, setSpritePosition] = useState({ x: 0, y: 0 });
 
   const changeScene = () => {
-    const scene = phaserRef.current?.scene;
+    const scene = sceneRef.current;
 
     if (scene) {
       scene.changeScene();
@@ -20,9 +22,10 @@ function App() {
   };
 
   const moveSprite = () => {
-    const scene = phaserRef.current.scene;
+    // const scene = phaserRef.current.scene;
+    const scene = sceneRef.current;
 
-    if (scene && scene.scene.key === "MainMenu") {
+    if (scene instanceof MainMenu) {
       // Get the update logo position
       scene.moveLogo(({ x, y }) => {
         setSpritePosition({ x, y });
@@ -31,7 +34,8 @@ function App() {
   };
 
   const addSprite = () => {
-    const scene = phaserRef.current.scene;
+    // const scene = phaserRef.current.scene;
+    const scene = sceneRef.current;
 
     if (scene) {
       // Add more stars
@@ -54,14 +58,33 @@ function App() {
     }
   };
 
-  // Event emitted from the PhaserGame component
-  const currentScene = (scene) => {
-    setCanMoveSprite(scene.scene.key !== "MainMenu");
-  };
+  useLayoutEffect(() => {
+    if(gameRef.current === undefined) {
+      gameRef.current = StartGame("game-container");
+    }
+
+    return () => {
+      if(gameRef.current) {
+        gameRef.current.destroy(true);
+        gameRef.current = undefined
+      }
+    }
+  }, [])
+
+  useEffect(() => {
+    EventBus.on("current-scene-ready", (currentScene: PlayableScene) => {
+      setCanMoveSprite(!(currentScene instanceof MainMenu))
+      sceneRef.current = currentScene
+    })
+
+    return () => {
+      EventBus.removeListener("current-scene-ready");
+    }
+  }, [])
 
   return (
     <div id="app">
-      <PhaserGame ref={phaserRef} currentActiveScene={currentScene} />
+      <div id="game-container"></div>
       <div>
         <div>
           <button className="button" onClick={changeScene}>
