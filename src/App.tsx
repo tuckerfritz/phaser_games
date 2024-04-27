@@ -1,4 +1,4 @@
-import { Link, Route, Switch } from "wouter";
+import { Route, Switch } from "wouter";
 import Demo from "./games/demo/Demo";
 import Home from "./Home";
 

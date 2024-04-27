@@ -15,8 +15,6 @@ const Container = React.forwardRef<
   <div ref={ref} className={cn("[grid-area:1/1]", className)} {...props} />
 ));
 
-// const Container = (id: string) => <div id={id} className="[grid-area: 1/1]"/>
-
 const Overlay = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
@@ -38,7 +36,5 @@ const Overlay = React.forwardRef<
     />
   );
 });
-
-// const Overlay = () => <div className="[grid-area: 1/1]"/>
 
 export { Root, Container, Overlay };

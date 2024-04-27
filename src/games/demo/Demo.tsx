@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 
 import Phaser, { Game } from "phaser";
 import { MainMenu, PlayableScene } from "./scenes";
