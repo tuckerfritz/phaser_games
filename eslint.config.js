@@ -10,4 +10,9 @@ export default [
   ...tseslint.configs.recommended,
   pluginReactConfig,
   eslintPluginPrettierRecommended,
+  {
+    rules: {
+      "react/react-in-jsx-scope": "off",
+    },
+  },
 ];
