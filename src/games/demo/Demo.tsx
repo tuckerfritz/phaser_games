@@ -13,7 +13,6 @@ function Demo() {
 
   const gameRef = useRef<Game>();
   const sceneRef = useRef<PlayableScene>();
-  const [spritePosition, setSpritePosition] = useState({ x: 0, y: 0 });
 
   const changeScene = () => {
     const scene = sceneRef.current;
@@ -28,10 +27,7 @@ function Demo() {
     const scene = sceneRef.current;
 
     if (scene instanceof MainMenu) {
-      // Get the update logo position
-      scene.moveLogo(({ x, y }) => {
-        setSpritePosition({ x, y });
-      });
+      scene.moveLogo();
     }
   };
 

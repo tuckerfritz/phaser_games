@@ -25,7 +25,11 @@ const Home = () => {
         <CardHeader>
           <CardTitle>Phaser Tutorial</CardTitle>
           <CardDescription>
-            The <a href="https://phaser.io/tutorials/making-your-first-phaser-3-game/part1">phaser tutorial</a> hosted on phaser's website.
+            The&nbsp;
+            <a href="https://phaser.io/tutorials/making-your-first-phaser-3-game/part1">
+              phaser tutorial
+            </a>
+            &nbsp; hosted on phaser&apos;s website.
           </CardDescription>
         </CardHeader>
         <CardContent>

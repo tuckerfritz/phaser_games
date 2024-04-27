@@ -2,14 +2,14 @@ import { EventBus } from "@/games/EventBus";
 import { Scene } from "phaser";
 
 export class Game extends Scene {
-  private player;
-  private stars;
-  private bombs;
-  private platforms;
-  private cursors;
-  private score = 0;
-  private gameOver = false;
-  private scoreText;
+  private player: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
+  private stars: Phaser.Physics.Arcade.Group;
+  private bombs: Phaser.Physics.Arcade.Group;
+  private platforms: Phaser.Physics.Arcade.StaticGroup;
+  private cursors: Phaser.Types.Input.Keyboard.CursorKeys;
+  private score: number = 0;
+  private gameOver: boolean = false;
+  private scoreText: Phaser.GameObjects.Text;
 
   constructor() {
     super("Game");
@@ -80,9 +80,10 @@ export class Game extends Scene {
       setXY: { x: 12, y: 0, stepX: 70 },
     });
 
-    this.stars.children.iterate(function (child) {
+    this.stars.children.iterate(function (child: Phaser.Physics.Arcade.Sprite) {
       //  Give each star a slightly different bounce
       child.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
+      return true;
     });
 
     this.bombs = this.physics.add.group();
@@ -149,8 +150,11 @@ export class Game extends Scene {
 
     if (this.stars.countActive(true) === 0) {
       //  A new batch of stars to collect
-      this.stars.children.iterate(function (child) {
+      this.stars.children.iterate(function (
+        child: Phaser.Physics.Arcade.Sprite,
+      ) {
         child.enableBody(true, child.x, 0, true, true);
+        return true;
       });
 
       const x =

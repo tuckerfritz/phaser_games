@@ -24,6 +24,7 @@
     "dev": "vite --config vite/config.dev.ts",
     "build": "vite build --config vite/config.prod.ts",
     "format": "npx prettier . --write",
+    "lint": "npx eslint src/** ",
     "prepare": "husky && husky install"
   },
   "lint-staged": {

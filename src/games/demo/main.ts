@@ -16,7 +16,7 @@ const config = {
   scene: [Boot, Preloader, MainMenu, Game, GameOver],
 };
 
-const StartGame = (parent: any) => {
+const StartGame = (parent) => {
   return new Phaser.Game({ ...config, parent });
 };
 
