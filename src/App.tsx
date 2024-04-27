@@ -4,14 +4,12 @@ import Home from "./Home";
 
 function App() {
   return (
-    <div id="app">
-      <Switch>
-        <Route path="/" component={Home}/>
-        <Route path="/phaser-demo" component={Demo}/>
-        <Route>404</Route>
-      </Switch>
-    </div>
-  )
+    <Switch>
+      <Route path="/" component={Home} />
+      <Route path="/phaser-demo" component={Demo} />
+      <Route>404</Route>
+    </Switch>
+  );
 }
 
 export default App;

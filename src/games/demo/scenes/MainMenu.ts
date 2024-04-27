@@ -38,7 +38,7 @@ export class MainMenu extends Scene {
     this.scene.start("Game");
   }
 
-  moveLogo(reactCallback: ({ x, y }: { x: number; y: number}) => void) {
+  moveLogo(reactCallback: ({ x, y }: { x: number; y: number }) => void) {
     if (this.logoTween) {
       if (this.logoTween.isPlaying()) {
         this.logoTween.pause();

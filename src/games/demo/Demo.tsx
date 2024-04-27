@@ -5,6 +5,7 @@ import { MainMenu, PlayableScene } from "./scenes";
 import StartGame from "./main";
 import { EventBus } from "../EventBus";
 import { Button } from "@/components/ui/button";
+import { Container, Overlay, Root } from "@/components/ui/layout";
 
 function App() {
   // The sprite can only be moved in the MainMenu Scene
@@ -60,57 +61,44 @@ function App() {
   };
 
   useLayoutEffect(() => {
-    if(gameRef.current === undefined) {
+    if (gameRef.current === undefined) {
       gameRef.current = StartGame("game-container");
     }
 
     return () => {
-      if(gameRef.current) {
+      if (gameRef.current) {
         gameRef.current.destroy(true);
-        gameRef.current = undefined
+        gameRef.current = undefined;
       }
-    }
-  }, [])
+    };
+  }, []);
 
   useEffect(() => {
     EventBus.on("current-scene-ready", (currentScene: PlayableScene) => {
-      setCanMoveSprite(!(currentScene instanceof MainMenu))
-      sceneRef.current = currentScene
-    })
+      setCanMoveSprite(!(currentScene instanceof MainMenu));
+      sceneRef.current = currentScene;
+    });
 
     return () => {
       EventBus.removeListener("current-scene-ready");
-    }
-  }, [])
+    };
+  }, []);
 
   return (
-    <div id="app">
-      <div id="game-container"></div>
-      <div className="flex gap-2 my-2">
-        <div>
-          <Button onClick={changeScene}>
-            Change Schene
-          </Button>
-        </div>
-        <div>
-          <Button
-            disabled={canMoveSprite}
-            onClick={moveSprite}
-          >
-            Toggle Movement
-          </Button>
-        </div>
-        <div>
-          <Button onClick={addSprite}>
-            Add New Sprite
-          </Button>
-        </div>
-        <div className="spritePosition">
-          Sprite Position:
-          <pre>{`{\n  x: ${spritePosition.x}\n  y: ${spritePosition.y}\n}`}</pre>
-        </div>
-      </div>
-    </div>
+    <Root>
+      <Container id="game-container" />
+      <Overlay className="flex gap-x-2 justify-end items-end">
+        <Button className="mb-2" onClick={changeScene}>
+          Change Scene
+        </Button>
+        <Button className="mb-2" disabled={canMoveSprite} onClick={moveSprite}>
+          Toggle Movement
+        </Button>
+        <Button className="mb-2 mr-2" onClick={addSprite}>
+          Add New Sprite
+        </Button>
+      </Overlay>
+    </Root>
   );
 }
 
