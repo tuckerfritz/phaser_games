@@ -7,7 +7,7 @@ import { EventBus } from "../EventBus";
 import { Button } from "@/components/ui/button";
 import { Container, Overlay, Root } from "@/components/ui/layout";
 
-function App() {
+function Demo() {
   // The sprite can only be moved in the MainMenu Scene
   const [canMoveSprite, setCanMoveSprite] = useState(true);
 
@@ -102,4 +102,4 @@ function App() {
   );
 }
 
-export default App;
+export default Demo;
