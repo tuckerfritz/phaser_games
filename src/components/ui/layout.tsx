@@ -1,5 +1,5 @@
-import { cn } from "@/lib/utils";
-import React, { useLayoutEffect, useState } from "react";
+import { cn, useResizeObserver } from "@/lib/utils";
+import React, { useState } from "react";
 
 const Root = React.forwardRef<
   HTMLDivElement,
@@ -25,11 +25,15 @@ const Overlay = React.forwardRef<
 >(({ className, ...props }, ref) => {
   const [{ width, height }, setDimensions] = useState({ width: 0, height: 0 });
 
-  useLayoutEffect(() => {
-    const canvasHeight = document.querySelector("canvas")?.height ?? 0;
-    const canvasWidth = document.querySelector("canvas")?.width ?? 0;
-    setDimensions({ width: canvasWidth, height: canvasHeight });
-  }, []);
+  useResizeObserver((entries) => {
+    for (const entry of entries) {
+      console.log(entry);
+      setDimensions({
+        width: Number(entry.target.getAttribute("width")),
+        height: Number(entry.target.getAttribute("height")),
+      });
+    }
+  }, "canvas");
 
   return (
     <div
