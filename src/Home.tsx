@@ -3,6 +3,7 @@ import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -18,8 +19,14 @@ const Home = () => {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <Link href="/phaser-demo">Click Me!</Link>
+          <img
+            src="assets/demo/phaser_demo-preview.png"
+            alt="phaser demo preview"
+          />
         </CardContent>
+        <CardFooter>
+          <Link href="/phaser-demo">Start Game!</Link>
+        </CardFooter>
       </Card>
       <Card className="w-72">
         <CardHeader>
@@ -33,8 +40,14 @@ const Home = () => {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <Link href="/phaser-tutorial">Click Me!</Link>
+          <img
+            src="assets/tutorial/phaser_tutorial-preview.png"
+            alt="phaser tutorial preview"
+          />
         </CardContent>
+        <CardFooter>
+          <Link href="phaser-tutorial">Start Game!</Link>
+        </CardFooter>
       </Card>
     </div>
   );
