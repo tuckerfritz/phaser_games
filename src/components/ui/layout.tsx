@@ -27,7 +27,6 @@ const Overlay = React.forwardRef<
 
   useResizeObserver((entries) => {
     for (const entry of entries) {
-      console.log(entry);
       setDimensions({
         width: Number(entry.target.getAttribute("width")),
         height: Number(entry.target.getAttribute("height")),

@@ -10,11 +10,12 @@ export const useResizeObserver = (
   callback: ResizeObserverCallback,
   queryString: string,
 ) => {
-  const resizeObserverRef = useRef<ResizeObserver>(
-    new ResizeObserver(callback),
-  );
+  const resizeObserverRef = useRef<ResizeObserver>();
   useEffect(() => {
-    resizeObserverRef.current.observe(document.querySelector(queryString));
+    if (resizeObserverRef.current === undefined) {
+      resizeObserverRef.current = new ResizeObserver(callback);
+      resizeObserverRef.current.observe(document.querySelector(queryString));
+    }
     () => {
       return resizeObserverRef.current.disconnect();
     };
