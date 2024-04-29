@@ -5,7 +5,7 @@ const Root = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => (
-  <div ref={ref} className={cn("grid", className)} {...props} />
+  <div ref={ref} id="game-root" className={cn("grid", className)} {...props} />
 ));
 
 Root.displayName = "Root";
