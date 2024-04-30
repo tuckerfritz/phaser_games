@@ -60,8 +60,8 @@ const Home = () => {
           </CardHeader>
           <CardContent>
             <img
-              src="assets/demo/phaser_demo-preview.png"
-              alt="phaser demo preview"
+              src="assets/happy_bird/happy_bird-preview.png"
+              alt="happy bird preview"
             />
           </CardContent>
           <CardFooter>
