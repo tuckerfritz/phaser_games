@@ -14,7 +14,7 @@ const Container = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => (
-  <div ref={ref} className={cn("[grid-area:1/1]", className)} {...props} />
+  <div ref={ref} className={cn("[grid-area:1/1] z-0", className)} {...props} />
 ));
 
 Container.displayName = "Container";
@@ -40,7 +40,7 @@ const Overlay = React.forwardRef<
       id="game-overlay"
       style={{ width, height }}
       className={cn(
-        "[grid-area:1/1] pointer-events-none [&_*]:pointer-events-auto [&_*]:select-none",
+        "[grid-area:1/1] z-10 pointer-events-none [&_*]:pointer-events-auto [&_*]:select-none",
         className,
       )}
       {...props}
