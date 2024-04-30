@@ -5,7 +5,7 @@ export class Game extends Scene {
   private bg: Phaser.GameObjects.TileSprite;
   private player: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
   private pipes: Phaser.Physics.Arcade.StaticGroup;
-  private spacebar: Phaser.Input.Keyboard.Key;
+  private pointer: Phaser.Input.Pointer;
   private score: number = 0;
   private flapped: boolean = false;
   private distanceMoved: number = 0;
@@ -40,7 +40,7 @@ export class Game extends Scene {
       }
     });
     this.anims.create({
-      key: "space",
+      key: "flap",
       frames: this.anims.generateFrameNumbers("bird", { start: 0, end: 3 }),
       frameRate: 60,
       repeat: 0,
@@ -60,10 +60,8 @@ export class Game extends Scene {
       this,
     );
 
-    // Create spacebar input
-    this.spacebar = this.input.keyboard.addKey(
-      Phaser.Input.Keyboard.KeyCodes.SPACE,
-    );
+    // Create pointer input
+    this.pointer = this.input.activePointer;
   }
 
   update() {
@@ -93,11 +91,11 @@ export class Game extends Scene {
     }
 
     // Process player inputs
-    if (this.spacebar.isDown && this.flapped === false) {
+    if (this.pointer.isDown && this.flapped === false) {
       this.player.setVelocityY(-250);
       this.flapped = true;
-    } else if (this.spacebar.isUp) {
-      this.player.anims.play("space");
+    } else if (!this.pointer.isDown) {
+      this.player.anims.play("flap");
       this.flapped = false;
     }
   }

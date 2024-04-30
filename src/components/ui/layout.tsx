@@ -37,8 +37,12 @@ const Overlay = React.forwardRef<
   return (
     <div
       ref={ref}
+      id="game-overlay"
       style={{ width, height }}
-      className={cn("[grid-area:1/1]", className)}
+      className={cn(
+        "[grid-area:1/1] pointer-events-none [&_*]:pointer-events-auto [&_*]:select-none",
+        className,
+      )}
       {...props}
     />
   );

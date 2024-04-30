@@ -50,7 +50,7 @@ const HappyBird = () => {
     <Root>
       <Container id="game-container" />
       <Overlay className="grid">
-        <div className="text-5xl font-semibold text-white justify-self-start ml-2  ">
+        <div className="text-5xl font-semibold text-white justify-self-start ml-2 pointer-events-none">
           {score}
         </div>
         {isGameOver && (
