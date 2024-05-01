@@ -29,7 +29,10 @@ export class Game extends Scene {
     this.bg = this.add.tileSprite(0, 0, 512, 512, "background").setScale(2, 2);
 
     // Create the player sprite, collision, and animations
-    this.player = this.physics.add.sprite(256, 256, "bird").setScale(2);
+    this.player = this.physics.add
+      .sprite(256, 256, "bird")
+      .setScale(2)
+      .setBodySize(16, 12);
     this.player.setBounce(0.2);
     this.player.setCollideWorldBounds(true);
     this.player.body.onWorldBounds = true;
@@ -51,12 +54,11 @@ export class Game extends Scene {
     this.createPipes();
 
     // Set collision between the player and the pipes
-    this.physics.add.collider(this.player, this.pipes);
-    this.physics.add.overlap(
+    this.physics.add.collider(
       this.player,
       this.pipes,
       this.processGameOver,
-      null,
+      undefined,
       this,
     );
 
