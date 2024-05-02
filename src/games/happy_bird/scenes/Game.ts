@@ -5,7 +5,6 @@ export class Game extends Scene {
   private bg: Phaser.GameObjects.TileSprite;
   private player: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
   private pipes: Phaser.Physics.Arcade.StaticGroup;
-  private pointer: Phaser.Input.Pointer;
   private score: number = 0;
   private flapped: boolean = false;
   private distanceMoved: number = 0;
@@ -25,10 +24,8 @@ export class Game extends Scene {
   }
 
   create() {
-    // Set the background for the game
     this.bg = this.add.tileSprite(0, 0, 512, 512, "background").setScale(2, 2);
 
-    // Create the player sprite, collision, and animations
     this.player = this.physics.add
       .sprite(256, 256, "bird")
       .setScale(2)
@@ -44,16 +41,16 @@ export class Game extends Scene {
     });
     this.anims.create({
       key: "flap",
-      frames: this.anims.generateFrameNumbers("bird", { start: 0, end: 3 }),
-      frameRate: 60,
+      frames: this.anims.generateFrameNumbers("bird", {
+        frames: [0, 1, 2, 3, 0],
+      }),
+      frameRate: 15,
       repeat: 0,
     });
 
-    // Construct pipe container out of pipe sprites
     this.pipes = this.physics.add.staticGroup();
     this.createPipes();
 
-    // Set collision between the player and the pipes
     this.physics.add.collider(
       this.player,
       this.pipes,
@@ -62,15 +59,22 @@ export class Game extends Scene {
       this,
     );
 
-    // Create pointer input
-    this.pointer = this.input.activePointer;
+    this.input.on("pointerup", () => {
+      this.flapped = false;
+    });
+
+    this.input.on("pointerdown", () => {
+      if (!this.flapped) {
+        this.player.anims.play("flap");
+        this.player.setVelocityY(-250);
+        this.flapped = true;
+      }
+    });
   }
 
   update() {
-    // Scroll the background
     this.bg.setTilePosition(this.bg.tilePositionX + 0.1);
 
-    // Scroll the pipes & destroy the ones that are off screen to the left
     this.pipes.incX(-1);
     this.pipes.children
       .getArray()
@@ -84,21 +88,11 @@ export class Game extends Scene {
         return true;
       });
 
-    // Keep track of how many pixels the player has moved
     this.distanceMoved += 1;
     if (this.distanceMoved % 256 === 0) {
       this.score += 1;
       EventBus.emit("update-score", this.score);
-      this.createPipes(); // Create another obstacle very 50 pixels
-    }
-
-    // Process player inputs
-    if (this.pointer.isDown && this.flapped === false) {
-      this.player.setVelocityY(-250);
-      this.flapped = true;
-    } else if (!this.pointer.isDown) {
-      this.player.anims.play("flap");
-      this.flapped = false;
+      this.createPipes();
     }
   }
 
