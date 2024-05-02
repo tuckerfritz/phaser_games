@@ -61,11 +61,23 @@ export class Game extends Scene {
 
     this.input.on("pointerup", () => {
       this.flapped = false;
+      this.tweens.add({
+        targets: this.player,
+        angle: 0,
+        ease: "Linear",
+        duration: 100,
+      });
     });
 
     this.input.on("pointerdown", () => {
       if (!this.flapped) {
         this.player.anims.play("flap");
+        this.tweens.add({
+          targets: this.player,
+          angle: -20,
+          ease: "Linear",
+          duration: 80,
+        });
         this.player.setVelocityY(-250);
         this.flapped = true;
       }
