@@ -29,7 +29,7 @@ export class Game extends Scene {
     this.player = this.physics.add
       .sprite(256, 256, "bird")
       .setScale(2)
-      .setBodySize(16, 12);
+      .setCircle(6, 2, 2);
     this.player.setBounce(0.2);
     this.player.setCollideWorldBounds(true);
     this.player.body.onWorldBounds = true;
