@@ -1,4 +1,5 @@
 import { Game } from "./scenes/Game";
+import { MainMenu } from "./scenes/MainMenu";
 
 const config = {
   type: Phaser.AUTO,
@@ -15,7 +16,7 @@ const config = {
       debug: false,
     },
   },
-  scene: [Game],
+  scene: [MainMenu, Game],
 };
 
 const StartGame = (parent: string) => {

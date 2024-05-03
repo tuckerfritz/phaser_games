@@ -82,6 +82,9 @@ export class Game extends Scene {
         this.flapped = true;
       }
     });
+
+    this.events.once("shutdown", this.cleanup, this);
+    EventBus.emit("current-scene-ready", this);
   }
 
   update() {
@@ -127,5 +130,16 @@ export class Game extends Scene {
     this.player.setTint(0xff0000);
     this.game.pause();
     EventBus.emit("game-over");
+  }
+
+  changeScene() {
+    EventBus.emit("change-scene", "MainMenu");
+    this.scene.start("MainMenu");
+  }
+
+  cleanup() {
+    this.input.off("pointerup");
+    this.input.off("pointerdown");
+    this.anims.remove("flap");
   }
 }
