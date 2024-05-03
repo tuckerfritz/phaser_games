@@ -2,9 +2,12 @@ import { Game } from "./scenes/Game";
 
 const config = {
   type: Phaser.AUTO,
-  width: 800,
-  height: 600,
-  parent: "game-container",
+  scale: {
+    parent: "game-container",
+    mode: Phaser.Scale.FIT,
+    width: 800,
+    height: 600,
+  },
   physics: {
     default: "arcade",
     arcade: {

@@ -24,15 +24,14 @@ const Overlay = React.forwardRef<
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => {
   const [{ width, height }, setDimensions] = useState({ width: 0, height: 0 });
-
   useResizeObserver((entries) => {
     for (const entry of entries) {
       setDimensions({
-        width: Number(entry.target.getAttribute("width")),
-        height: Number(entry.target.getAttribute("height")),
+        width: Number(entry.contentRect.width),
+        height: Number(entry.contentRect.height),
       });
     }
-  }, "canvas");
+  }, "#game-container");
 
   return (
     <div

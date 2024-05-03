@@ -9,9 +9,12 @@ import { Preloader } from "./scenes/Preloader";
 // https://newdocs.phaser.io/docs/3.70.0/Phaser.Types.Core.GameConfig
 const config = {
   type: Phaser.AUTO,
-  width: 1024,
-  height: 768,
-  parent: "game-container",
+  scale: {
+    parent: "game-container",
+    mode: Phaser.Scale.FIT,
+    width: 1024,
+    height: 768,
+  },
   backgroundColor: "#028af8",
   scene: [Boot, Preloader, MainMenu, Game, GameOver],
 };
