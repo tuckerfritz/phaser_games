@@ -10,6 +10,8 @@ export class Game extends Scene {
   private score: number = 0;
   private gameOver: boolean = false;
   private scoreText: Phaser.GameObjects.Text;
+  private leftDown: boolean = false;
+  private rightDown: boolean = false;
 
   constructor() {
     super("Game");
@@ -114,6 +116,22 @@ export class Game extends Scene {
       null,
       this,
     );
+
+    // listen for touch input events
+    EventBus.on("LEFT", (pressedOrReleased: "pressed" | "released") => {
+      if (pressedOrReleased === "released") {
+        this.leftDown = false;
+      } else {
+        this.leftDown = true;
+      }
+    });
+    EventBus.on("RIGHT", (pressedOrReleased: "pressed" | "released") => {
+      if (pressedOrReleased === "released") {
+        this.rightDown = false;
+      } else {
+        this.rightDown = true;
+      }
+    });
   }
 
   update() {
@@ -122,17 +140,14 @@ export class Game extends Scene {
       return;
     }
 
-    if (this.cursors.left.isDown) {
+    if (this.cursors.left.isDown || this.leftDown) {
       this.player.setVelocityX(-160);
-
       this.player.anims.play("left", true);
-    } else if (this.cursors.right.isDown) {
+    } else if (this.cursors.right.isDown || this.rightDown) {
       this.player.setVelocityX(160);
-
       this.player.anims.play("right", true);
     } else {
       this.player.setVelocityX(0);
-
       this.player.anims.play("turn");
     }
 
