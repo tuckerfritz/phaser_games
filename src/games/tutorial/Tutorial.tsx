@@ -54,7 +54,10 @@ function Tutorial() {
           <div className="m-2 flex self-end place-content-between">
             <DPad config={DPadConfiguration.LEFT_RIGHT} />
             <PressableButton eventName="JUMP" className="size-12">
-              <img src="/assets/controls/face/shadedDark36.png" />
+              <img
+                src="/assets/controls/face/shadedDark36.png"
+                draggable={false}
+              />
             </PressableButton>
           </div>
         )}
