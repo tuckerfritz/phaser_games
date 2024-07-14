@@ -132,6 +132,9 @@ export class Game extends Scene {
         this.rightDown = true;
       }
     });
+    EventBus.on("JUMP", () => {
+      this.player.body.touching.down && this.player.setVelocityY(-330);
+    });
   }
 
   update() {

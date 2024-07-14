@@ -4,7 +4,10 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import StartGame from "./main";
 import { EventBus } from "../EventBus";
 import { Button } from "@/components/ui/button";
-import DPad, { DPadConfiguration, DPadDirection } from "@/components/ui/dpad";
+import DPad, {
+  DPadConfiguration,
+  DPadDirection,
+} from "@/components/controls/dpad";
 
 function Tutorial() {
   const [isGameOver, setIsGameOver] = useState(false);
@@ -60,6 +63,10 @@ function Tutorial() {
     }
   };
 
+  const onJump = () => {
+    EventBus.emit("JUMP");
+  };
+
   return (
     <Root>
       <Container id="game-container" />
@@ -69,11 +76,12 @@ function Tutorial() {
             Start Over
           </Button>
         ) : (
-          <DPad
-            className="self-end justify-self-start ml-2"
-            config={DPadConfiguration.LEFT_RIGHT}
-            onPointer={onPointer}
-          />
+          <div className="m-2 flex self-end place-content-between">
+            <DPad config={DPadConfiguration.LEFT_RIGHT} onPointer={onPointer} />
+            <button className="size-12" onClick={onJump}>
+              <img src="/assets/controls/face/shadedDark36.png" />
+            </button>
+          </div>
         )}
       </Overlay>
     </Root>

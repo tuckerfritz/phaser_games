@@ -11,7 +11,7 @@ export enum DPadDirection {
 }
 
 interface DPadProps {
-  className: string;
+  className?: string;
   config: DPadConfiguration;
   onPointer: (
     event: React.PointerEvent<HTMLButtonElement>,
