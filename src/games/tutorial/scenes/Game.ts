@@ -12,6 +12,7 @@ export class Game extends Scene {
   private scoreText: Phaser.GameObjects.Text;
   private leftDown: boolean = false;
   private rightDown: boolean = false;
+  private jumpDown: boolean = false;
 
   constructor() {
     super("Game");
@@ -132,8 +133,12 @@ export class Game extends Scene {
         this.rightDown = true;
       }
     });
-    EventBus.on("JUMP", () => {
-      this.player.body.touching.down && this.player.setVelocityY(-330);
+    EventBus.on("JUMP", (pressedOrReleased: "pressed" | "released") => {
+      if (pressedOrReleased === "released") {
+        this.jumpDown = false;
+      } else {
+        this.jumpDown = true;
+      }
     });
   }
 
@@ -154,7 +159,10 @@ export class Game extends Scene {
       this.player.anims.play("turn");
     }
 
-    if (this.cursors.up.isDown && this.player.body.touching.down) {
+    if (
+      this.cursors.up.isDown ||
+      (this.jumpDown && this.player.body.touching.down)
+    ) {
       this.player.setVelocityY(-330);
     }
   }

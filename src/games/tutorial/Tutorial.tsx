@@ -4,10 +4,8 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import StartGame from "./main";
 import { EventBus } from "../EventBus";
 import { Button } from "@/components/ui/button";
-import DPad, {
-  DPadConfiguration,
-  DPadDirection,
-} from "@/components/controls/dpad";
+import DPad, { DPadConfiguration } from "@/components/controls/dpad";
+import PressableButton from "@/components/controls/PressableButton";
 
 function Tutorial() {
   const [isGameOver, setIsGameOver] = useState(false);
@@ -44,29 +42,6 @@ function Tutorial() {
     }
   };
 
-  const onPointer = (
-    event: React.PointerEvent<HTMLButtonElement>,
-    direction: DPadDirection,
-  ) => {
-    if (direction === DPadDirection.LEFT) {
-      if (event.type === "pointerdown") {
-        EventBus.emit("LEFT", "pressed");
-      } else {
-        EventBus.emit("LEFT", "released");
-      }
-    } else {
-      if (event.type === "pointerdown") {
-        EventBus.emit("RIGHT", "pressed");
-      } else {
-        EventBus.emit("RIGHT", "released");
-      }
-    }
-  };
-
-  const onJump = () => {
-    EventBus.emit("JUMP");
-  };
-
   return (
     <Root>
       <Container id="game-container" />
@@ -77,10 +52,10 @@ function Tutorial() {
           </Button>
         ) : (
           <div className="m-2 flex self-end place-content-between">
-            <DPad config={DPadConfiguration.LEFT_RIGHT} onPointer={onPointer} />
-            <button className="size-12" onClick={onJump}>
+            <DPad config={DPadConfiguration.LEFT_RIGHT} />
+            <PressableButton eventName="JUMP" className="size-12">
               <img src="/assets/controls/face/shadedDark36.png" />
-            </button>
+            </PressableButton>
           </div>
         )}
       </Overlay>

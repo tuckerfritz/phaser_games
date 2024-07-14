@@ -1,49 +1,32 @@
+import PressableButton from "@/components/controls/PressableButton";
+
 export enum DPadConfiguration {
   LEFT_RIGHT,
   UP_DOWN_LEFT_RIGHT,
 }
 
-export enum DPadDirection {
-  LEFT,
-  RIGHT,
-  UP,
-  DOWN,
-}
-
 interface DPadProps {
   className?: string;
   config: DPadConfiguration;
-  onPointer: (
-    event: React.PointerEvent<HTMLButtonElement>,
-    direction: DPadDirection,
-  ) => void;
 }
 
-const DPad = ({ className, config, onPointer }: DPadProps) => {
+const DPad = ({ className, config }: DPadProps) => {
   return config == DPadConfiguration.LEFT_RIGHT ? (
     <div className={`flex gap-2 w-20 ${className}`}>
-      <button
-        onPointerDown={(e) => onPointer(e, DPadDirection.LEFT)}
-        onPointerUp={(e) => onPointer(e, DPadDirection.LEFT)}
-        onPointerLeave={(e) => onPointer(e, DPadDirection.LEFT)}
-      >
+      <PressableButton eventName="LEFT">
         <img
           draggable={false}
           className="rotate-90"
-          src="/assets/controls/dpad/shadedDark10.png"
+          src="/assets/controls/dpad/shadedDark27.png"
         />
-      </button>
-      <button
-        onPointerDown={(e) => onPointer(e, DPadDirection.RIGHT)}
-        onPointerUp={(e) => onPointer(e, DPadDirection.RIGHT)}
-        onPointerLeave={(e) => onPointer(e, DPadDirection.RIGHT)}
-      >
+      </PressableButton>
+      <PressableButton eventName="RIGHT">
         <img
           draggable={false}
           className="-rotate-90"
-          src="/assets/controls/dpad/shadedDark10.png"
+          src="/assets/controls/dpad/shadedDark27.png"
         />
-      </button>
+      </PressableButton>
     </div>
   ) : null;
 };
