@@ -12,7 +12,7 @@ interface DPadProps {
 
 const DPad = ({ className, config }: DPadProps) => {
   return config == DPadConfiguration.LEFT_RIGHT ? (
-    <div className={`flex gap-2 w-20 ${className}`}>
+    <div className={`flex gap-2 w-24 ${className}`}>
       <PressableButton eventName="LEFT">
         <img
           draggable={false}
