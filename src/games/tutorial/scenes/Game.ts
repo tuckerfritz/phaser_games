@@ -160,8 +160,8 @@ export class Game extends Scene {
     }
 
     if (
-      this.cursors.up.isDown ||
-      (this.jumpDown && this.player.body.touching.down)
+      (this.cursors.up.isDown || this.jumpDown) &&
+      this.player.body.touching.down
     ) {
       this.player.setVelocityY(-330);
     }
