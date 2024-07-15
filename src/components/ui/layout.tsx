@@ -5,7 +5,13 @@ const Root = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => (
-  <div ref={ref} id="game-root" className={cn("grid", className)} {...props} />
+  <div
+    ref={ref}
+    id="game-root"
+    className={cn("grid", className)}
+    {...props}
+    style={{ ...props.style, userSelect: "none" }}
+  />
 ));
 
 Root.displayName = "Root";
@@ -37,7 +43,7 @@ const Overlay = React.forwardRef<
     <div
       ref={ref}
       id="game-overlay"
-      style={{ width, height, userSelect: "none" }}
+      style={{ width, height }}
       className={cn(
         "[grid-area:1/1] z-10 pointer-events-none [&_*]:pointer-events-auto [&_*]:select-none",
         className,
