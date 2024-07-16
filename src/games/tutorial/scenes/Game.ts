@@ -7,9 +7,7 @@ export class Game extends Scene {
   private bombs: Phaser.Physics.Arcade.Group;
   private platforms: Phaser.Physics.Arcade.StaticGroup;
   private cursors: Phaser.Types.Input.Keyboard.CursorKeys;
-  private score: number = 0;
   private gameOver: boolean = false;
-  private scoreText: Phaser.GameObjects.Text;
   private leftDown: boolean = false;
   private rightDown: boolean = false;
   private jumpDown: boolean = false;
@@ -91,11 +89,6 @@ export class Game extends Scene {
 
     this.bombs = this.physics.add.group();
 
-    //  The score
-    this.scoreText = this.add.text(16, 16, "score: 0", {
-      fontSize: "32px",
-    });
-
     //  Collide the player and the stars with the platforms
     this.physics.add.collider(this.player, this.platforms);
     this.physics.add.collider(this.stars, this.platforms);
@@ -170,9 +163,7 @@ export class Game extends Scene {
   collectStar(player, star) {
     star.disableBody(true, true);
 
-    //  Add and update the score
-    this.score += 10;
-    this.scoreText.setText("Score: " + this.score);
+    EventBus.emit("increment-score");
 
     if (this.stars.countActive(true) === 0) {
       //  A new batch of stars to collect

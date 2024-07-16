@@ -9,6 +9,7 @@ import PressableButton from "@/components/controls/PressableButton";
 
 function Tutorial() {
   const [isGameOver, setIsGameOver] = useState(false);
+  const [score, setScore] = useState(0);
   const gameRef = useRef<Game>();
 
   useLayoutEffect(() => {
@@ -25,17 +26,20 @@ function Tutorial() {
   }, []);
 
   useEffect(() => {
+    EventBus.on("increment-score", () => {
+      setScore((score) => (score += 10));
+    });
     EventBus.on("game-over", () => {
       setIsGameOver(true);
     });
-
     return () => {
-      EventBus.removeListener("game-over");
+      EventBus.removeAllListeners();
     };
   }, []);
 
   const startOver = () => {
     setIsGameOver(false);
+    setScore(0);
     if (gameRef) {
       gameRef.current.destroy(true);
       gameRef.current = StartGame("game-container");
@@ -51,15 +55,20 @@ function Tutorial() {
             Start Over
           </Button>
         ) : (
-          <div className="m-2 flex self-end place-content-between">
-            <DPad config={DPadConfiguration.LEFT_RIGHT} />
-            <PressableButton eventName="JUMP" className="size-12">
-              <img
-                src="/assets/controls/face/shadedDark36.png"
-                draggable={false}
-              />
-            </PressableButton>
-          </div>
+          <>
+            <div className="text-5xl font-semibold text-white justify-self-start ml-2">
+              Score: {score}
+            </div>
+            <div className="m-2 flex self-end place-content-between">
+              <DPad config={DPadConfiguration.LEFT_RIGHT} />
+              <PressableButton eventName="JUMP" className="size-12">
+                <img
+                  src="/assets/controls/face/shadedDark36.png"
+                  draggable={false}
+                />
+              </PressableButton>
+            </div>
+          </>
         )}
       </Overlay>
     </Root>
